@@ -8,6 +8,7 @@ import FeedbackForm from "./components/feedbackForm";
 import { v4 as uuidv4 } from "uuid";
 import AboutPage from "./pages/AboutPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AboutLink from "./components/aboutLink";
 
 function App() {
   const [feedback, setFeedback] = useState(FeedbackData);
@@ -43,6 +44,7 @@ function App() {
           ></Route>
           <Route path="/about" element={<AboutPage />} />
         </Routes>
+        <AboutLink />
       </div>
     </Router>
   );

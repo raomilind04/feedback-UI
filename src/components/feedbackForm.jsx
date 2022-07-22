@@ -3,9 +3,12 @@ import Card from "../shared/card";
 import Button from "../shared/button"
 import RatingSelect from "./ratingSelect";
 import {v4 as uuidv4} from "uuid"; 
+import {useContext} from "react"; 
+import FeedbackContext from "../context/feedbackContext";
 
-function FeedbackForm({handleAdd}){
+function FeedbackForm(){
 
+    const {addFeedback}= useContext(FeedbackContext); 
     const [text, setText]= useState(""); 
     const [btnDisabled, setBtnDisabled]= useState(true); 
     const [message, setMessage]= useState(""); 
@@ -31,7 +34,7 @@ function FeedbackForm({handleAdd}){
                 text: text,
                 rating: rating
             }
-            handleAdd(newFeedback); 
+            addFeedback(newFeedback); 
             setText(""); 
         }
     }

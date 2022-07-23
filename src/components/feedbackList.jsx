@@ -3,11 +3,13 @@ import propTypes from "prop-types";
 import {motion, AnimatePresence} from "framer-motion"; 
 import FeedbackContext from "../context/feedbackContext";
 import {useContext} from "react"; 
+import Spinner from "../shared/spinner";
 
 function FeedbackList() {
-  const {feedback} = useContext(FeedbackContext); 
+  const {feedback, isLoading} = useContext(FeedbackContext); 
+
   return (
-    <div className="feedback-list">
+    isLoading ? <Spinner /> : <div className="feedback-list">
     <AnimatePresence>
       {feedback.map((item, index) => {
         return (
@@ -18,7 +20,7 @@ function FeedbackList() {
       })}
       </AnimatePresence>
     </div>
-  );
+  )
 }
 
 

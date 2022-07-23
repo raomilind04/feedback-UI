@@ -24,9 +24,17 @@ export const FeedbackProvider = ({ children }) => {
     setIsLoading(false); 
  }; 
   
-  const updateFeedback= (id, updateItem)=> {
+  const updateFeedback= async (id, updateItem)=> {
+    const response= await fetch(`http://localhost:4000/feedback/${id}`, {
+      method: "PUT", 
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(updateItem) 
+    })
+    const data= await response.json(); 
      setFeedback(feedback.map((item)=> {
-        return item.id=== id ? {...item, ...updateItem} : item
+        return item.id=== id ? {...item, ...data} : item
      }))
   }
 
@@ -37,14 +45,26 @@ export const FeedbackProvider = ({ children }) => {
     })
   }
 
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     if (window.confirm("Are you sure ?")) {
+      await fetch(`http://localhost:4000/feedback/${id}`, {
+        method: "DELETE"
+      })
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
+  const addFeedback = async (newFeedback) => {
+    const response= await fetch("http://localhost:4000/feedback", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(newFeedback)
+    }); 
+    const data= await response.json(); 
+
+
+    setFeedback([data, ...feedback]);
   };
 
   return (
